@@ -21,7 +21,7 @@ export interface ITimeEntry extends Document {
 }
 const timeEntrySchema: Schema = new Schema(
   {
-    userId: { type: mongoose.Types.ObjectId, required: true, ref: "Users" },
+    userId: { type: String, required: true }, // email or user ID of the employee
     date: { type: Date, required: true },
     clockInTime: { type: Date },
     clockInLocation: { type: Object }, // ILocation
