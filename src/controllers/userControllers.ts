@@ -6,7 +6,11 @@ import {
   userProfiles,
 } from "../services/userServices";
 
-import { verifyToken, checkIsAdmin } from "../utils/authUtils";
+import {
+  verifyToken,
+  checkIsAdmin,
+  getTokenFromRequest,
+} from "../utils/authUtils";
 
 const getAllUsersController = async (
   req: Request,
@@ -86,24 +90,12 @@ const getProfileController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({
-      success: "false",
-      message: "No token provided",
-    });
+  const tokenResult = getTokenFromRequest(req, res);
+  if (!tokenResult.success) {
+    return tokenResult.response;
   }
 
-  const { valid, decoded, error } = verifyToken(token);
-  if (!valid) {
-    return res.status(401).json({
-      success: "false",
-      message: "Invalid token",
-      error,
-    });
-  }
-
-  const email = (decoded as any).email;
+  const email = (tokenResult.decoded as any).email;
   try {
     const userProfile = await userProfiles(email);
     if (userProfile.success === "false") {
