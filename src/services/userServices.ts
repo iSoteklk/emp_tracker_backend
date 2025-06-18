@@ -69,6 +69,7 @@ const loginUser = async (email: string, password: string) => {
         fname: user.fname,
         lname: user.lname,
         contact: user.contact,
+        role: user.role,
       },
       config.auth.jwtSecret,
       {
