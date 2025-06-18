@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import * as userController from "../controllers/userControllers";
-import { authMiddleware } from "../middleware/authMiddleware";
+import { authMiddleware, adminMiddleware } from "../middleware/authMiddleware";
 
 /**
  * GET api/v1/users/getall
@@ -21,7 +21,7 @@ router.get("/users/getall", userController.getAllUsersController);
  */
 router.post(
   "/users/create",
-  // authMiddleware,
+  authMiddleware,
   userController.createUsersController
 );
 
@@ -43,11 +43,11 @@ router.get(
 
 /**
  * GET api/v1/users/getUserByEmail
- * Get user Email
+ * Get user Email (Admin only)
  */
 router.get(
   "/users/getUserByEmail",
-  // authMiddleware,
+  adminMiddleware,
   userController.getUserByEmailController
 );
 
