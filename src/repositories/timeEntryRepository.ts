@@ -5,6 +5,17 @@ const logTimeEntryStart = async (
   timeEntry: ITimeEntry
 ): Promise<ITimeEntry> => {
   try {
+    // Check if user is already clocked in for the day
+    const existingEntry = await TimeEntry.findOne({
+      email: timeEntry.email,
+      date: timeEntry.date,
+      status: "clocked-in",
+    });
+
+    if (existingEntry) {
+      throw new Error("User is already clocked in for this day");
+    }
+
     const newTimeEntry = new TimeEntry(timeEntry);
     return await newTimeEntry.save();
   } catch (error) {
@@ -18,6 +29,17 @@ const logTimeEntryEnd = async (
   timeEntry: Partial<ITimeEntry>
 ): Promise<ITimeEntry | null> => {
   try {
+    // Check if user is already clocked out for the day
+    const existingClockedOutEntry = await TimeEntry.findOne({
+      email: id,
+      date: timeEntry.date,
+      status: "clocked-out",
+    });
+
+    if (existingClockedOutEntry) {
+      throw new Error("User is already clocked out for this day");
+    }
+
     const updatedTimeEntry = await TimeEntry.findOneAndUpdate(
       { email: id, status: "clocked-in", date: timeEntry.date },
       {
