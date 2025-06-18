@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "2ef1d393-ed29-4350-ab16-66e9eb53c4c9",
+        "_postman_id": "d1799705-5dac-4237-9963-ec10560f456c",
         "name": "Employee Tracker API",
         "description": "API collection for the Employee Tracker backend application",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -232,7 +232,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Headquarters\",\n    \"address\": \"123 Main St, City, Country\",\n    \"contact\": \"1234567890\"\n}",
+                            "raw": "{\n    \"name\": \"Headquarters\",\n    \"address\": \"xig\",\n    \"contact\": \"1234567890\"\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -270,7 +270,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Updated Headquarters\",\n    \"contact\": \"0987654321\"\n}",
+                            "raw": "{\n  \"latitude\": 6.876231,\n  \"longitude\": 79.900228\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -278,7 +278,7 @@
                             }
                         },
                         "url": {
-                            "raw": "http://localhost:4000/api/v1/locations/update/123 Main St, City, Country",
+                            "raw": "http://localhost:4000/api/v1/locations/update/xig",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -289,7 +289,7 @@
                                 "v1",
                                 "locations",
                                 "update",
-                                "123 Main St, City, Country"
+                                "xig"
                             ]
                         },
                         "description": "Update a location by address (Admin access only)"
@@ -360,7 +360,7 @@
         },
         {
             "key": "token",
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTI2ZDZhOTM0YzZhMWUyNTI1NDljNiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImZuYW1lIjoiSm9obiIsImxuYW1lIjoiRG9lIiwiY29udGFjdCI6IjEyMzQ1Njc4OTAiLCJpYXQiOjE3NTAyMzI1NzMsImV4cCI6MTc1MDMxODk3M30.ePTmDAQ3qys-USKsZdpYdsa8MGoYDVgM4cVCUBp2TBw",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTI2ZWVjZDdhMTFlYWY3ZmVjOTc2NSIsImVtYWlsIjoiYWRtaW5AdXNlci5jb20iLCJmbmFtZSI6InN1cGVyIiwibG5hbWUiOiJhZG1pbiIsImNvbnRhY3QiOiIwMDAwMDAwMDAwIiwiaWF0IjoxNzUwMjQwMTcxLCJleHAiOjE3NTAzMjY1NzF9.01uYG8HSdnuso03C-RkVQ1-16NE1EKfax_8sRc0saW0",
             "type": "string"
         }
     ]
