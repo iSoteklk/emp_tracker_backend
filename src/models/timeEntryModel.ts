@@ -7,7 +7,7 @@ export interface ILocation {
   accuracy?: number; // GPS accuracy in meters
 }
 export interface ITimeEntry extends Document {
-  userId: mongoose.Types.ObjectId;
+  email: string;
   date: Date; // Date of the shift (YYYY-MM-DD format)
   clockInTime?: Date;
   clockInLocation?: ILocation;
