@@ -6,7 +6,7 @@ import {
   userProfiles,
 } from "../services/userServices";
 
-import { verifyToken } from "../utils/authUtils";
+import { verifyToken, checkIsAdmin } from "../utils/authUtils";
 
 const getAllUsersController = async (
   req: Request,
@@ -40,8 +40,7 @@ const createUsersController = async (
 ) => {
   const userData = req.body;
   let user;
-  //append field points = 0 to the user data
-  userData.points = 0;
+
   try {
     user = await createUser(userData);
     if (user && user.success === "false") {
@@ -132,23 +131,6 @@ const getUserByEmailController = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const token = req.headers.authorization?.split(" ")[1];
-  // if (!token) {
-  //   return res.status(401).json({
-  //     success: "false",
-  //     message: "No token provided",
-  //   });
-  // }
-
-  // const { valid, decoded, error } = verifyToken(token);
-  // if (!valid) {
-  //   return res.status(401).json({
-  //     success: "false",
-  //     message: "Invalid token",
-  //     error,
-  //   });
-  // }
-
   const email = req.query.email as string;
   try {
     const userProfile = await userProfiles(email);
