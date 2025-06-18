@@ -46,6 +46,7 @@ const checkIsAdmin = (req: Request, res: Response) => {
 
   const userRole = (tokenResult.decoded as any).role;
   if (userRole !== "admin") {
+    console.log("Access denied: User is not an admin");
     return {
       success: false,
       response: res.status(403).json({
