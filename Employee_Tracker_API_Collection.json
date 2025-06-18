@@ -188,6 +188,118 @@
             "description": "User management related endpoints"
         },
         {
+            "name": "Location Management",
+            "item": [
+                {
+                    "name": "Get All Locations",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "http://localhost:4000/api/v1/locations/getall",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "api",
+                                "v1",
+                                "locations",
+                                "getall"
+                            ]
+                        },
+                        "description": "Get all locations (Admin access only)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Location",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Headquarters\",\n    \"address\": \"123 Main St, City, Country\",\n    \"contact\": \"1234567890\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/api/v1/locations/create",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "api",
+                                "v1",
+                                "locations",
+                                "create"
+                            ]
+                        },
+                        "description": "Create a new location (Admin access only)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Location",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Updated Headquarters\",\n    \"contact\": \"0987654321\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/api/v1/locations/update/123 Main St, City, Country",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "api",
+                                "v1",
+                                "locations",
+                                "update",
+                                "123 Main St, City, Country"
+                            ]
+                        },
+                        "description": "Update a location by address (Admin access only)"
+                    },
+                    "response": []
+                }
+            ],
+            "description": "Location management related endpoints"
+        },
+        {
             "name": "Health Check",
             "event": [
                 {
