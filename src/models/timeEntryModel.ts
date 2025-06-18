@@ -21,7 +21,7 @@ export interface ITimeEntry extends Document {
 }
 const timeEntrySchema: Schema = new Schema(
   {
-    userId: { type: String, required: true }, // email or user ID of the employee
+    email: { type: String, required: true }, // email
     date: { type: Date, required: true },
     clockInTime: { type: Date },
     clockInLocation: { type: Object }, // ILocation
