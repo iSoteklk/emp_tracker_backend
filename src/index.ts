@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes";
 import locationRoutes from "./routes/locationRoutes";
+import timeEntryRoutes from "./routes/timeEntryRoutes";
 import config from "./config/config";
 
 const app = express();
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", locationRoutes);
+app.use("/api/v1", timeEntryRoutes);
 
 mongoose
   .connect(config.database.mongoUri)
