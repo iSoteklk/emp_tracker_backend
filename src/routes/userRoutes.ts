@@ -7,7 +7,11 @@ import { authMiddleware, adminMiddleware } from "../middleware/authMiddleware";
  * GET api/v1/users/getall
  * Get all users
  */
-router.get("/users/getall", userController.getAllUsersController);
+router.get(
+  "/users/getall",
+  adminMiddleware,
+  userController.getAllUsersController
+);
 
 /**
  * POST api/v1/users/create
@@ -21,7 +25,7 @@ router.get("/users/getall", userController.getAllUsersController);
  */
 router.post(
   "/users/create",
-  authMiddleware,
+  adminMiddleware,
   userController.createUsersController
 );
 
