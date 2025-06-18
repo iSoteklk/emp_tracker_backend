@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes";
+import locationRoutes from "./routes/locationRoutes";
 import config from "./config/config";
 
 const app = express();
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", locationRoutes);
 
 mongoose
   .connect(config.database.mongoUri)
