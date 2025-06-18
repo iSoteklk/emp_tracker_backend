@@ -15,13 +15,7 @@ const verifyToken = (token: string) => {
   }
 };
 
-/**
- * Checks if the request has a valid token and if the user is an admin
- * @param req Express request object
- * @param res Express response object
- * @returns Object containing success status, user data (if successful), or error response (if failed)
- */
-const checkIsAdmin = (req: Request, res: Response) => {
+const getTokenFromRequest = (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return {
@@ -33,19 +27,28 @@ const checkIsAdmin = (req: Request, res: Response) => {
     };
   }
 
-  const { valid, decoded, error } = verifyToken(token);
-  if (!valid) {
+  const tokenResult = verifyToken(token);
+  if (!tokenResult.valid) {
     return {
       success: false,
       response: res.status(401).json({
         success: "false",
         message: "Invalid token",
-        error,
+        error: tokenResult.error,
       }),
     };
   }
 
-  const userRole = (decoded as any).role;
+  return { success: true, decoded: tokenResult.decoded };
+};
+
+const checkIsAdmin = (req: Request, res: Response) => {
+  const tokenResult = getTokenFromRequest(req, res);
+  if (!tokenResult.success) {
+    return tokenResult;
+  }
+
+  const userRole = (tokenResult.decoded as any).role;
   if (userRole !== "admin") {
     return {
       success: false,
@@ -56,7 +59,7 @@ const checkIsAdmin = (req: Request, res: Response) => {
     };
   }
 
-  return { success: true, decoded };
+  return { success: true, decoded: tokenResult.decoded };
 };
 
-export { verifyToken, checkIsAdmin };
+export { verifyToken, checkIsAdmin, getTokenFromRequest };
