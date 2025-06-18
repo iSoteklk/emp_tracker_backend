@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyToken } from "../utils/authUtils";
+import { verifyToken, checkIsAdmin } from "../utils/authUtils";
 import { JwtPayload } from "jsonwebtoken";
 
 export const authMiddleware = (
@@ -19,6 +19,19 @@ export const authMiddleware = (
   if (!valid) {
     console.log(`Invalid token: ${error}`);
     return res.status(401).json({ message: "Invalid token", error });
+  }
+
+  next();
+};
+
+export const adminMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const result = checkIsAdmin(req, res);
+  if (!result.success) {
+    return result.response;
   }
 
   next();
