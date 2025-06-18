@@ -1,31 +1,12 @@
 {
     "info": {
-        "_postman_id": "b2c7d034-8a15-4b67-86df-34f96f748b5c",
+        "_postman_id": "2ef1d393-ed29-4350-ab16-66e9eb53c4c9",
         "name": "Employee Tracker API",
         "description": "API collection for the Employee Tracker backend application",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "31379261"
     },
     "item": [
-        {
-            "name": "Health Check",
-            "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:4000/",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "4000",
-                    "path": [
-                        ""
-                    ]
-                },
-                "description": "Check if the backend server is running"
-            },
-            "response": []
-        },
         {
             "name": "User Management",
             "item": [
@@ -33,7 +14,13 @@
                     "name": "Get All Users",
                     "request": {
                         "method": "GET",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
                         "url": {
                             "raw": "http://localhost:4000/api/v1/users/getall",
                             "protocol": "http",
@@ -56,7 +43,13 @@
                     "name": "Create User",
                     "request": {
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"email\": \"user@example.com\",\n    \"fname\": \"John\",\n    \"lname\": \"Doe\",\n    \"contact\": \"1234567890\",\n    \"role\": \"employee\",\n    \"password\": \"password123\"\n}",
@@ -124,13 +117,19 @@
                             "bearer": [
                                 {
                                     "key": "token",
-                                    "value": "{{auth_token}}",
+                                    "value": "",
                                     "type": "string"
                                 }
                             ]
                         },
                         "method": "GET",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
                         "url": {
                             "raw": "http://localhost:4000/api/v1/users/profile",
                             "protocol": "http",
@@ -153,7 +152,13 @@
                     "name": "Get User by Email",
                     "request": {
                         "method": "GET",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
                         "url": {
                             "raw": "http://localhost:4000/api/v1/users/getUserByEmail?email=user@example.com",
                             "protocol": "http",
@@ -181,6 +186,38 @@
                 }
             ],
             "description": "User management related endpoints"
+        },
+        {
+            "name": "Health Check",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {}
+                    }
+                }
+            ],
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:4000/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "4000",
+                    "path": [
+                        ""
+                    ]
+                },
+                "description": "Check if the backend server is running"
+            },
+            "response": []
         }
     ],
     "event": [
@@ -198,11 +235,7 @@
             "script": {
                 "type": "text/javascript",
                 "exec": [
-                    "// Auto-save the token from login responses",
-                    "if (pm.response.code === 200 && pm.response.json().token) {",
-                    "    pm.environment.set(\"auth_token\", pm.response.json().token);",
-                    "    console.log('Token saved to environment');",
-                    "}"
+                    ""
                 ]
             }
         }
@@ -211,6 +244,11 @@
         {
             "key": "base_url",
             "value": "http://localhost:4000",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTI2ZDZhOTM0YzZhMWUyNTI1NDljNiIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImZuYW1lIjoiSm9obiIsImxuYW1lIjoiRG9lIiwiY29udGFjdCI6IjEyMzQ1Njc4OTAiLCJpYXQiOjE3NTAyMzI1NzMsImV4cCI6MTc1MDMxODk3M30.ePTmDAQ3qys-USKsZdpYdsa8MGoYDVgM4cVCUBp2TBw",
             "type": "string"
         }
     ]
