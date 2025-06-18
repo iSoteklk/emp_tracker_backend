@@ -1,14 +1,10 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
-
-dotenv.config();
-
-const jwtSecret = process.env.JWT_SECRET as string;
+import config from "../config/config";
 
 const verifyToken = (token: string) => {
   try {
-    const decoded = jwt.verify(token, jwtSecret);
+    const decoded = jwt.verify(token, config.auth.jwtSecret);
     return { valid: true, decoded };
   } catch (err: any) {
     return { valid: false, error: err.message };

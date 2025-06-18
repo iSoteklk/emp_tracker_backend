@@ -2,13 +2,10 @@ import bcrypt from "bcrypt";
 import User from "../models/userModel";
 import { IUser } from "../models/userModel";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import * as userRepository from "../repositories/userRepository";
-
-dotenv.config();
+import config from "../config/config";
 
 const saltRounds = 10;
-const jwtSecret = process.env.JWT_SECRET as string;
 
 // Get all user
 const getAllUsers = async () => {
@@ -73,7 +70,7 @@ const loginUser = async (email: string, password: string) => {
         lname: user.lname,
         contact: user.contact,
       },
-      jwtSecret,
+      config.auth.jwtSecret,
       {
         expiresIn: "24h",
       }

@@ -1,14 +1,10 @@
 import express from "express";
-import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes";
-
-dotenv.config();
+import config from "./config/config";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.MONGODB_URI as string;
 
 app.use(
   cors({
@@ -20,6 +16,7 @@ app.use(
       "Content-Type",
       "Origin",
       "authorization",
+      "Authorization",
     ],
   })
 );
@@ -37,10 +34,12 @@ app.get("/", (req, res) => {
 app.use("/api/v1", userRoutes);
 
 mongoose
-  .connect(MONGODB_URI)
-  .then(() => console.log(`🗄️| Connected to MongoDB Databse successfully`))
+  .connect(config.database.mongoUri)
+  .then(() => console.log(`🗄️| Connected to MongoDB Database successfully`))
   .then(async () => {
-    app.listen(PORT);
+    app.listen(config.server.port);
   })
-  .then(() => console.log(`🌎 | App Started on  http://localhost:${PORT}`))
+  .then(() =>
+    console.log(`🌎 | App Started on http://localhost:${config.server.port}`)
+  )
   .catch((err) => console.log("🚫 " + err));
