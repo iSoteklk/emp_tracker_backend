@@ -18,9 +18,9 @@ export const calculateTimeDifference = (
   return `${hours}h ${minutes}m ${seconds}s`;
 };
 
-calculateTimeDifference(
-  new Date("2025-06-18T10:00:00.000Z"),
-  new Date("2025-06-18T17:00:00.000Z")
-);
+// calculateTimeDifference(
+//   new Date("2025-06-18T10:00:00.000Z"),
+//   new Date("2025-06-18T17:00:00.000Z")
+// );
 
-console.log(new Date());
+// console.log(new Date());
