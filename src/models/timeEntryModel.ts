@@ -13,7 +13,7 @@ export interface ITimeEntry extends Document {
   clockInLocation?: ILocation;
   clockOutTime?: Date;
   clockOutLocation?: ILocation;
-  totalHours?: number; // Calculated field
+  totalHours?: any; // Calculated field
   status: "clocked-in" | "clocked-out" | "incomplete";
   notes?: string;
   createdAt: Date;
@@ -27,7 +27,7 @@ const timeEntrySchema: Schema = new Schema(
     clockInLocation: { type: Object }, // ILocation
     clockOutTime: { type: Date },
     clockOutLocation: { type: Object }, // ILocation
-    totalHours: { type: Number, default: 0, required: false }, // Calculated field, can be updated later
+    totalHours: { type: String, default: "0", required: false }, // Calculated field, can be updated later
     status: {
       type: String,
       enum: ["clocked-in", "clocked-out", "incomplete"],
