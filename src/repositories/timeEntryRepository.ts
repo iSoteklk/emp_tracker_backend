@@ -1,5 +1,6 @@
 import TimeEntry from "../models/timeEntryModel";
 import { ITimeEntry } from "../models/timeEntryModel";
+import { calculateTimeDifference } from "../utils/timeUtils";
 
 const logTimeEntryStart = async (
   timeEntry: ITimeEntry
@@ -40,13 +41,30 @@ const logTimeEntryEnd = async (
       throw new Error("User is already clocked out for this day");
     }
 
+    //get existing clocked-in entry to calculate total hours
+    const existingClockedInEntry = await TimeEntry.findOne({
+      email: id,
+      status: "clocked-in",
+      date: timeEntry.date,
+    });
+    if (!existingClockedInEntry) {
+      throw new Error("No clocked-in entry found for this user on this date");
+    }
+    // Calculate total hours
+    const clockInTime = existingClockedInEntry.clockInTime;
+    const clockOutTime = new Date();
+    const totalHours = calculateTimeDifference(
+      clockInTime as Date,
+      clockOutTime as Date
+    );
+
     const updatedTimeEntry = await TimeEntry.findOneAndUpdate(
       { email: id, status: "clocked-in", date: timeEntry.date },
       {
         $set: {
           clockOutTime: timeEntry.clockOutTime,
           clockOutLocation: timeEntry.clockOutLocation,
-          totalHours: timeEntry.totalHours,
+          totalHours: totalHours,
           status: "clocked-out",
           notes: timeEntry.notes,
         },
