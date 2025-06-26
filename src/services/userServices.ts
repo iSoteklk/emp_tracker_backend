@@ -83,6 +83,9 @@ const loginUser = async (email: string, password: string) => {
       success: "true",
       token,
       contact: user.contact,
+      role: user.role,
+      name: `${user.fname} ${user.lname}`,
+      email: user.email,
       message: "Login successful",
     };
   } catch (err) {
