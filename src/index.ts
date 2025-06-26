@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes";
 import locationRoutes from "./routes/locationRoutes";
 import timeEntryRoutes from "./routes/timeEntryRoutes";
 import config from "./config/config";
+import { displayBanner, displayStartupInfo } from "./utils/startupUtils";
 
 const app = express();
 
@@ -39,11 +40,11 @@ app.use("/api/v1", timeEntryRoutes);
 
 mongoose
   .connect(config.database.mongoUri)
-  .then(() => console.log(`🗄️| Connected to MongoDB Database successfully`))
-  .then(async () => {
+  .then(() => {
     app.listen(config.server.port);
+
+    // Display ASCII art banner and startup info
+    displayBanner(config.server.port);
+    displayStartupInfo(config.server.port);
   })
-  .then(() =>
-    console.log(`🌎 | App Started on http://localhost:${config.server.port}`)
-  )
   .catch((err) => console.log("🚫 " + err));
