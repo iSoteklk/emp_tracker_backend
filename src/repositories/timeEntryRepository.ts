@@ -110,7 +110,7 @@ const getTimeEntriesByUserIdAndDate = async (
   try {
     const timeEntries = await TimeEntry.find({
       email: userId,
-      date: new Date(date),
+      date: date,
     }).sort({ createdAt: -1 });
     return timeEntries;
   } catch (error) {
