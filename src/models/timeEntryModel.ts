@@ -8,7 +8,7 @@ export interface ILocation {
 }
 export interface ITimeEntry extends Document {
   email: string;
-  date: Date; // Date of the shift (YYYY-MM-DD format)
+  date: String; // Date of the shift (YYYY-MM-DD format)
   clockInTime?: Date;
   clockInLocation?: ILocation;
   clockOutTime?: Date;
@@ -22,7 +22,7 @@ export interface ITimeEntry extends Document {
 const timeEntrySchema: Schema = new Schema(
   {
     email: { type: String, required: true }, // email
-    date: { type: Date, required: true },
+    date: { type: String, required: true },
     clockInTime: { type: Date },
     clockInLocation: { type: Object }, // ILocation
     clockOutTime: { type: Date },
