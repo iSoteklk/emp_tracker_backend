@@ -10,7 +10,6 @@ const logTimeEntryStart = async (
     const existingEntry = await TimeEntry.findOne({
       email: timeEntry.email,
       date: timeEntry.date,
-      status: "clocked-in",
     });
 
     if (existingEntry) {
