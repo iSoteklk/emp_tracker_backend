@@ -227,7 +227,7 @@ const getTimeEntriesByUserAndDateController = async (
     }
 
     const email = (tokenResult.decoded as any).email;
-    const date  =  req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date
+    const date  =  req.params.date.includes("T") ? req.params.date.split("T")[0] : req.params.date
     
 
     const timeEntries = await timeEntryServices.getTimeEntriesByUserIdAndDate(
