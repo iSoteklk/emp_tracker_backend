@@ -21,6 +21,7 @@ const clockInController = async (
       ...req.body,
       email,
       status: "clocked-in",
+      date:req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date
     };
 
     const result = await timeEntryServices.logTimeEntryStart(timeEntryData);
@@ -62,7 +63,9 @@ const clockOutController = async (
       clockOutLocation,
       totalHours,
       notes,
-      date: req.body.date,
+      date: req.body.date 
+      ? (req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date) 
+      : new Date().toISOString().split("T")[0],
     };
 
     const result = await timeEntryServices.logTimeEntryEnd(
@@ -191,7 +194,8 @@ const getTimeEntriesByDateController = async (
   next: NextFunction
 ) => {
   try {
-    const { date } = req.params;
+    let { date } = req.params;
+    date  =  date.includes("T") ? date.split("T")[0] : date
     const timeEntries = await timeEntryServices.getTimeEntriesByDate(date);
 
     return res.status(200).json({
@@ -223,7 +227,8 @@ const getTimeEntriesByUserAndDateController = async (
     }
 
     const email = (tokenResult.decoded as any).email;
-    const { date } = req.params;
+    const date  =  req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date
+    
 
     const timeEntries = await timeEntryServices.getTimeEntriesByUserIdAndDate(
       email,
@@ -256,7 +261,7 @@ const getTimeEntriesByUserAndDateAdminController = async (
     }
 
     const email = req.body.email || req.body.userId;
-    const { date } = req.body;
+    const date  =  req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date
 
     // Validate email and date
     if (!email || !date) {
