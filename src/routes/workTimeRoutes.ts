@@ -3,7 +3,9 @@ import {
   getWorkTimeConfigByNameController,
   getAllWorkTimeConfigsController,
   addWorkTimeConfigController,
-  updateWorkTimeConfigController
+  updateWorkTimeConfigController,
+  setActiveWorkTimeConfigController,
+  getActiveWorkTimeConfigController
 } from "../controllers/workTimeController";
 import { adminMiddleware, authMiddleware } from "../middleware/authMiddleware";
 
@@ -197,5 +199,56 @@ router.post("/work-time/config", adminMiddleware, addWorkTimeConfigController);
  *         description: Server error
  */
 router.put("/work-time/config/:name", adminMiddleware, updateWorkTimeConfigController);
+
+/**
+ * @swagger
+ * /work-time/config/active/{name}:
+ *   put:
+ *     summary: Set active work time configuration
+ *     description: Set a specific work time configuration as active (Admin only)
+ *     tags: [WorkTime]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The name of the work time configuration to set as active
+ *     responses:
+ *       200:
+ *         description: Work time configuration set as active successfully
+ *       401:
+ *         description: Unauthorized - Admin authentication required
+ *       404:
+ *         description: Work time configuration not found
+ *       500:
+ *         description: Server error
+ */
+router.put("/work-time/config/active/:name", adminMiddleware, setActiveWorkTimeConfigController);
+
+/**
+ * @swagger
+ * /work-time/config/active:
+ *   get:
+ *     summary: Get active work time configuration
+ *     description: Retrieve the currently active work time configuration
+ *     tags: [WorkTime]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Active work time configuration retrieved successfully
+ *       404:
+ *         description: No active work time configuration found
+ *       500:
+ *         description: Server error
+ */
+router.get("/work-time/config/active", getActiveWorkTimeConfigController);
+
+
+
+
 
 export default router;
