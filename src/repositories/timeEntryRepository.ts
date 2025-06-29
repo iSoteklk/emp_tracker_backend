@@ -122,7 +122,7 @@ const getTimeEntriesByUserId = async (
 
 const getTimeEntriesByDate = async (date: string): Promise<ITimeEntry[]> => {
   try {
-    const timeEntries = await TimeEntry.find({ date: new Date(date) }).sort({
+    const timeEntries = await TimeEntry.find({ date: date }).sort({
       createdAt: -1,
     });
     return timeEntries;
