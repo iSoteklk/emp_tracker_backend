@@ -43,7 +43,7 @@ router.post("/shift/clock-out", clockOutController);
  * Get all time entries for the authenticated user
  * @returns {Array} List of time entries for the user
  */
-router.get("/shift/me", authMiddleware, getUserTimeEntriesController);
+router.get("/shift/me/:range", getUserTimeEntriesController);
 
 /**
  * GET api/v1/shift/byUser

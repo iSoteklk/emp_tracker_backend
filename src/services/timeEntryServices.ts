@@ -32,10 +32,11 @@ const logTimeEntryEnd = async (
 };
 
 const getTimeEntriesByUserId = async (
-  userId: string
+  userId: string,
+  range: string = "all"
 ): Promise<ITimeEntry[]> => {
   try {
-    return await timeEntryRepository.getTimeEntriesByUserId(userId);
+    return await timeEntryRepository.getTimeEntriesByUserId(userId, range);
   } catch (error) {
     console.error("Error getting time entries by user ID:", error);
     throw new Error(

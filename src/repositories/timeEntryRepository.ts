@@ -78,10 +78,39 @@ const logTimeEntryEnd = async (
 };
 
 const getTimeEntriesByUserId = async (
-  userId: string
+  userId: string,
+  range: string = "all"
 ): Promise<ITimeEntry[]> => {
   try {
-    const timeEntries = await TimeEntry.find({ email: userId }).sort({
+    let query: any = { email: userId };
+    
+    // Calculate date range if not "all"
+    if (range !== "all") {
+      const now = new Date();
+      let startDate = new Date();
+      
+      // Properly parse the range parameter (e.g., "1w", "2m", "10w")
+      const match = range.match(/^(\d+)([wm])$/);
+      if (match) {
+        const value = parseInt(match[1]);
+        const unit = match[2];
+        
+        if (unit === "w") {
+          // Weeks
+          startDate.setDate(now.getDate() - (value * 7));
+        } else if (unit === "m") {
+          // Months
+          startDate.setMonth(now.getMonth() - value);
+        }
+        
+        // Reset time to 00:00:00 to ensure full day inclusion
+        startDate.setHours(0, 0, 0, 0);
+        
+        query.date = { $gte: startDate };
+      }
+    }
+    
+    const timeEntries = await TimeEntry.find(query).sort({
       date: -1,
     });
     return timeEntries;

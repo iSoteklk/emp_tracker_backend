@@ -135,7 +135,8 @@ const getUserTimeEntriesController = async (
     }
 
     const email = (tokenResult.decoded as any).email;
-    const timeEntries = await timeEntryServices.getTimeEntriesByUserId(email);
+    const range = req.params.range || "all"; // Default to 'all' if not provided
+    const timeEntries = await timeEntryServices.getTimeEntriesByUserId(email,range);
 
     return res.status(200).json({
       success: "true",
