@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes";
 import locationRoutes from "./routes/locationRoutes";
 import timeEntryRoutes from "./routes/timeEntryRoutes";
+import workTimeRoutes from "./routes/workTimeRoutes";
 import config from "./config/config";
 import { displayBanner, displayStartupInfo } from "./utils/startupUtils";
 
@@ -37,6 +38,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", locationRoutes);
 app.use("/api/v1", timeEntryRoutes);
+app.use("/api/v1", workTimeRoutes);
 
 mongoose
   .connect(config.database.mongoUri)
