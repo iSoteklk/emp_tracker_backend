@@ -12,6 +12,7 @@ export interface IWorkTime extends Document {
   weekendDays?: number[]; // Array of days considered as weekends (0 = Sunday, 6 = Saturday)
   use24HourFormat: boolean; // Whether to use 24-hour format (true) or AM/PM format (false)
   showSeconds: boolean; // Whether to show seconds in time displays
+  isActive?: number; // Whether this work time configuration is active
   createdAt: Date;
   updatedAt: Date;
 }
@@ -74,6 +75,11 @@ const workTimeSchema: Schema = new Schema(
       required: true,
       default: true,
     },
+    isActive: {
+      type: Boolean,
+      required: false,
+      default: 0,
+    }, // Whether this work time configuration is active
   },
   { timestamps: true }
 );
