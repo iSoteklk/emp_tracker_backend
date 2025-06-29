@@ -86,6 +86,24 @@ const updateWorkTimeConfig = async (
   }
 };
 
+const setActiveWorkTimeConfig = async (name: string): Promise<IWorkTime | null> => {
+  try {
+    return await workTimeRepository.setActiveWorkTimeConfig(name);
+  } catch (error) {
+    console.error("Error in work time service - setActiveWorkTimeConfig:", error);
+    throw error;
+  }
+};
+
+const getActiveWorkTimeConfig = async (): Promise<IWorkTime | null> => {
+  try {
+    return await workTimeRepository.getActiveWorkTimeConfig();
+  } catch (error) {
+    console.error("Error in work time service - getActiveWorkTimeConfig:", error);
+    throw error;
+  }
+};
+
 /**
  * Validate the work time data
  * @param workTimeData The work time data to validate
@@ -142,5 +160,7 @@ export {
   getWorkTimeConfigByName,
   getAllWorkTimeConfigs,
   addWorkTimeConfig,
-  updateWorkTimeConfig
+  updateWorkTimeConfig,
+  setActiveWorkTimeConfig,
+  getActiveWorkTimeConfig
 };
