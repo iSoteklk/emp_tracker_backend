@@ -23,7 +23,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"date\": \"2025-06-19T00:00:00.000Z\",\n    \"clockInTime\": \"2025-06-19T06:38:59.491Z\",\n    \"clockInLocation\": {\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060,\n        \"address\": \"xig\",\n        \"accuracy\": 10\n    },\n    \"notes\": \"Starting my shift\"\n}",
+							"raw": "{\n    \"date\": \"2025-06-28T05:30:00.000+00:00\",\n    \"clockInTime\": \"2025-06-28T05:30:00.000+00:00\",\n    \"clockInLocation\": {\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060,\n        \"address\": \"xig\",\n        \"accuracy\": 10\n    },\n    \"notes\": \"Starting my shift\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -61,7 +61,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"date\": \"2025-06-19T00:00:00.000Z\",\n    \"clockOutTime\": \"2025-06-19T06:38:59.491Z\",\n    \"clockOutLocation\": {\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060,\n        \"address\": \"xig\",\n        \"accuracy\": 10\n    },\n    \"notes\": \"Completed daily tasks\"\n}",
+							"raw": "{\n    \"date\": \"2025-06-28T10:30:00.000+00:00\",\n    \"clockOutTime\": \"2025-06-28T10:30:00.000+00:00\",\n    \"clockOutLocation\": {\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060,\n        \"address\": \"xig\",\n        \"accuracy\": 10\n    },\n    \"notes\": \"Completed daily tasks\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -98,7 +98,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:4000/api/v1/shift/me",
+							"raw": "http://localhost:4000/api/v1/shift/me/1w",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -108,7 +108,8 @@
 								"api",
 								"v1",
 								"shift",
-								"me"
+								"me",
+								"1w"
 							]
 						},
 						"description": "Get all time entries for the authenticated user"
@@ -127,7 +128,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:4000/api/v1/shift/me/date/2025-06-18",
+							"raw": "http://localhost:4000/api/v1/shift/me/date/2025-06-28",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -139,7 +140,7 @@
 								"shift",
 								"me",
 								"date",
-								"2025-06-18"
+								"2025-06-28"
 							]
 						},
 						"description": "Get time entries for the authenticated user filtered by specific date"
@@ -187,7 +188,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:4000/api/v1/shift/date/2025-06-18",
+							"raw": "http://localhost:4000/api/v1/shift/date/2025-06-29",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -198,7 +199,7 @@
 								"v1",
 								"shift",
 								"date",
-								"2025-06-18"
+								"2025-06-29"
 							]
 						},
 						"description": "Get all time entries for a specific date (admin only)"
@@ -371,7 +372,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n}",
+							"raw": "// {\n//     \"email\": \"user@example.com\",\n//     \"password\": \"password123\"\n// }\n\n\n{\n    \"email\": \"admin@user.com\",\n    \"password\": \"13372\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -585,6 +586,148 @@
 				}
 			],
 			"description": "Location management related endpoints"
+		},
+		{
+			"name": "Work Time Configuration",
+			"item": [
+				{
+					"name": "Get All Work Time Configs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config"
+							]
+						},
+						"description": "Get all work time configurations"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Work Time Config By Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config/Standard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config",
+								"Standard"
+							]
+						},
+						"description": "Get a specific work time configuration by name"
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Work Time Config",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Night Shift\",\n    \"standardStartTime\": \"22:00\",\n    \"standardEndTime\": \"06:00\",\n    \"fullWorkingHours\": 8,\n    \"lunchBreakDuration\": 30,\n    \"shortBreakDuration\": 15,\n    \"lateThresholdMinutes\": 5,\n    \"overtimeAfterHours\": 8,\n    \"weekendDays\": [0, 6],\n    \"use24HourFormat\": true,\n    \"showSeconds\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config"
+							]
+						},
+						"description": "Add a new work time configuration (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Work Time Config",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"standardStartTime\": \"09:00\",\n    \"standardEndTime\": \"17:00\",\n    \"fullWorkingHours\": 7.5,\n    \"lunchBreakDuration\": 45,\n    \"shortBreakDuration\": 10,\n    \"lateThresholdMinutes\": 10,\n    \"overtimeAfterHours\": 7.5,\n    \"weekendDays\": [5, 6],\n    \"use24HourFormat\": false,\n    \"showSeconds\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config/Standard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config",
+								"Standard"
+							]
+						},
+						"description": "Update an existing work time configuration by name (Admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Work time configuration management endpoints"
 		},
 		{
 			"name": "Health Check",
