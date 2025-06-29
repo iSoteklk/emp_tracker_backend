@@ -146,9 +146,73 @@ const updateWorkTimeConfigController = async (
   }
 };
 
+const setActiveWorkTimeConfigController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { name } = req.params;
+    
+    const updatedWorkTimeConfig = await workTimeServices.setActiveWorkTimeConfig(
+      name
+    );
+    
+    if (!updatedWorkTimeConfig) {
+      return res.status(404).json({
+        success: false,
+        message: `Work time configuration '${name}' not found`
+      });
+    }
+    
+    return res.status(200).json({
+      success: true,
+      message: "Work time configuration updated successfully",
+      data: updatedWorkTimeConfig
+    });
+  } catch (error) {
+    console.error("Error in updateWorkTimeConfigController:", error);
+    return res.status(400).json({
+      success: false,
+      message: "Failed to update work time configuration",
+      error: error instanceof Error ? error.message : "Unknown error"
+    });
+  }
+}
+
+//get active work time config
+const getActiveWorkTimeConfigController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+    try {
+    const activeWorkTimeConfig = await workTimeServices.getActiveWorkTimeConfig();
+    if (!activeWorkTimeConfig) {
+      return res.status(404).json({
+        success: false,
+        message: "No active work time configuration found"
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      data: activeWorkTimeConfig
+    });
+  } catch (error) {
+    console.error("Error in getActiveWorkTimeConfigController:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve active work time configuration",
+      error: error instanceof Error ? error.message : "Unknown error"
+    });
+  }
+};
+
 export {
   getWorkTimeConfigByNameController,
   getAllWorkTimeConfigsController,
   addWorkTimeConfigController,
-  updateWorkTimeConfigController
+  updateWorkTimeConfigController,
+  setActiveWorkTimeConfigController,
+  getActiveWorkTimeConfigController
 };
