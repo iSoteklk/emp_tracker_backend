@@ -1,217 +1,858 @@
 {
-    "info": {
-        "_postman_id": "b2c7d034-8a15-4b67-86df-34f96f748b5c",
-        "name": "Employee Tracker API",
-        "description": "API collection for the Employee Tracker backend application",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "Health Check",
-            "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                    "raw": "http://localhost:4000/",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "4000",
-                    "path": [
-                        ""
-                    ]
-                },
-                "description": "Check if the backend server is running"
-            },
-            "response": []
-        },
-        {
-            "name": "User Management",
-            "item": [
-                {
-                    "name": "Get All Users",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "http://localhost:4000/api/v1/users/getall",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "4000",
-                            "path": [
-                                "api",
-                                "v1",
-                                "users",
-                                "getall"
-                            ]
-                        },
-                        "description": "Get all users in the system"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Create User",
-                    "request": {
-                        "method": "POST",
-                        "header": [],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"user@example.com\",\n    \"fname\": \"John\",\n    \"lname\": \"Doe\",\n    \"contact\": \"1234567890\",\n    \"role\": \"employee\",\n    \"password\": \"password123\"\n}",
-                            "options": {
-                                "raw": {
-                                    "language": "json"
-                                }
-                            }
-                        },
-                        "url": {
-                            "raw": "http://localhost:4000/api/v1/users/create",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "4000",
-                            "path": [
-                                "api",
-                                "v1",
-                                "users",
-                                "create"
-                            ]
-                        },
-                        "description": "Create a new user"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Login User",
-                    "request": {
-                        "method": "POST",
-                        "header": [],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n}",
-                            "options": {
-                                "raw": {
-                                    "language": "json"
-                                }
-                            }
-                        },
-                        "url": {
-                            "raw": "http://localhost:4000/api/v1/users/login",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "4000",
-                            "path": [
-                                "api",
-                                "v1",
-                                "users",
-                                "login"
-                            ]
-                        },
-                        "description": "Login with user credentials to get authentication token"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get User Profile",
-                    "request": {
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}",
-                                    "type": "string"
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "http://localhost:4000/api/v1/users/profile",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "4000",
-                            "path": [
-                                "api",
-                                "v1",
-                                "users",
-                                "profile"
-                            ]
-                        },
-                        "description": "Get the authenticated user's profile (requires auth token)"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get User by Email",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "http://localhost:4000/api/v1/users/getUserByEmail?email=user@example.com",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "4000",
-                            "path": [
-                                "api",
-                                "v1",
-                                "users",
-                                "getUserByEmail"
-                            ],
-                            "query": [
-                                {
-                                    "key": "email",
-                                    "value": "user@example.com",
-                                    "description": "Email of the user to look up"
-                                }
-                            ]
-                        },
-                        "description": "Get user information by email address"
-                    },
-                    "response": []
-                }
-            ],
-            "description": "User management related endpoints"
-        }
-    ],
-    "event": [
-        {
-            "listen": "prerequest",
-            "script": {
-                "type": "text/javascript",
-                "exec": [
-                    ""
-                ]
-            }
-        },
-        {
-            "listen": "test",
-            "script": {
-                "type": "text/javascript",
-                "exec": [
-                    "// Auto-save the token from login responses",
-                    "if (pm.response.code === 200 && pm.response.json().token) {",
-                    "    pm.environment.set(\"auth_token\", pm.response.json().token);",
-                    "    console.log('Token saved to environment');",
-                    "}"
-                ]
-            }
-        }
-    ],
-    "variable": [
-        {
-            "key": "base_url",
-            "value": "http://localhost:4000",
-            "type": "string"
-        }
-    ]
+	"info": {
+		"_postman_id": "a115b46a-662b-4366-9258-db1f163f486d",
+		"name": "Employee Tracker API",
+		"description": "API collection for the Employee Tracker backend application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31379261"
+	},
+	"item": [
+		{
+			"name": "Time Entry Management",
+			"item": [
+				{
+					"name": "Clock In",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2025-06-28T05:30:00.000+00:00\",\n    \"clockInTime\": \"2025-06-28T05:30:00.000+00:00\",\n    \"clockInLocation\": {\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060,\n        \"address\": \"xig\",\n        \"accuracy\": 10\n    },\n    \"notes\": \"Starting my shift\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/clock-in",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"clock-in"
+							]
+						},
+						"description": "Record a new clock-in event for the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Clock Out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2025-06-28T10:30:00.000+00:00\",\n    \"clockOutTime\": \"2025-06-28T10:30:00.000+00:00\",\n    \"clockOutLocation\": {\n        \"latitude\": 40.7128,\n        \"longitude\": -74.0060,\n        \"address\": \"xig\",\n        \"accuracy\": 10\n    },\n    \"notes\": \"Completed daily tasks\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/clock-out",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"clock-out"
+							]
+						},
+						"description": "Record a clock-out event for the authenticated user's active time entry"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Time Entries",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/me/1w",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"me",
+								"1w"
+							]
+						},
+						"description": "Get all time entries for the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Time Entries By Date",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/me/date/2025-06-28",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"me",
+								"date",
+								"2025-06-28"
+							]
+						},
+						"description": "Get time entries for the authenticated user filtered by specific date"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Time Entries (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"all"
+							]
+						},
+						"description": "Get all time entries (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Time Entries By Date (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/date/2025-06-29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"date",
+								"2025-06-29"
+							]
+						},
+						"description": "Get all time entries for a specific date (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Time Entry By ID (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/60d21b4667d0d8992e610c85",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"60d21b4667d0d8992e610c85"
+							]
+						},
+						"description": "Get a specific time entry by ID (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Time Entries By User (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/byUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"byUser"
+							]
+						},
+						"description": "Get all time entries for a specific user (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Time Entries By User and Date (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/shift/byDateAndUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"shift",
+								"byDateAndUser"
+							]
+						},
+						"description": "Get time entries for a specific user filtered by date (admin only)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/users/getall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"getall"
+							]
+						},
+						"description": "Get all users in the system"
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"fname\": \"John\",\n    \"lname\": \"Doe\",\n    \"contact\": \"1234567890\",\n    \"role\": \"employee\",\n    \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/users/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"create"
+							]
+						},
+						"description": "Create a new user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//     \"email\": \"user@example.com\",\n//     \"password\": \"password123\"\n// }\n\n\n{\n    \"email\": \"admin@user.com\",\n    \"password\": \"13372\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						},
+						"description": "Login with user credentials to get authentication token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/users/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"profile"
+							]
+						},
+						"description": "Get the authenticated user's profile (requires auth token)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/users/getUserByEmail?email=user@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"getUserByEmail"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user@example.com",
+									"description": "Email of the user to look up"
+								}
+							]
+						},
+						"description": "Get user information by email address"
+					},
+					"response": []
+				}
+			],
+			"description": "User management related endpoints"
+		},
+		{
+			"name": "Location Management",
+			"item": [
+				{
+					"name": "Get All Locations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/locations/getall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"locations",
+								"getall"
+							]
+						},
+						"description": "Get all locations (Admin access only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Location",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Headquarters\",\n    \"address\": \"xig\",\n    \"contact\": \"1234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/locations/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"locations",
+								"create"
+							]
+						},
+						"description": "Create a new location (Admin access only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Location",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 6.876231,\n  \"longitude\": 79.900228\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/locations/update/xig",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"locations",
+								"update",
+								"xig"
+							]
+						},
+						"description": "Update a location by address (Admin access only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Location management related endpoints"
+		},
+		{
+			"name": "Work Time Configuration",
+			"item": [
+				{
+					"name": "Get All Work Time Configs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config"
+							]
+						},
+						"description": "Get all work time configurations"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Work Time Config By Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config/Standard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config",
+								"Standard"
+							]
+						},
+						"description": "Get a specific work time configuration by name"
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Work Time Config",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Night Shift\",\n    \"standardStartTime\": \"22:00\",\n    \"standardEndTime\": \"06:00\",\n    \"fullWorkingHours\": 8,\n    \"lunchBreakDuration\": 30,\n    \"shortBreakDuration\": 15,\n    \"lateThresholdMinutes\": 5,\n    \"overtimeAfterHours\": 8,\n    \"weekendDays\": [0, 6],\n    \"use24HourFormat\": true,\n    \"showSeconds\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config"
+							]
+						},
+						"description": "Add a new work time configuration (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Work Time Config",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"standardStartTime\": \"09:00\",\n    \"standardEndTime\": \"17:00\",\n    \"fullWorkingHours\": 7.5,\n    \"lunchBreakDuration\": 45,\n    \"shortBreakDuration\": 10,\n    \"lateThresholdMinutes\": 10,\n    \"overtimeAfterHours\": 7.5,\n    \"weekendDays\": [5, 6],\n    \"use24HourFormat\": false,\n    \"showSeconds\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config/Standard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config",
+								"Standard"
+							]
+						},
+						"description": "Update an existing work time configuration by name (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Set Active Work Time Config",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config/active/Standard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config",
+								"active",
+								"Standard"
+							]
+						},
+						"description": "Set a specific work time configuration as active (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Active Work Time Config",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/work-time/config/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"work-time",
+								"config",
+								"active"
+							]
+						},
+						"description": "Retrieve the currently active work time configuration"
+					},
+					"response": []
+				}
+			],
+			"description": "Work time configuration management endpoints"
+		},
+		{
+			"name": "Health Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						""
+					]
+				},
+				"description": "Check if the backend server is running"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTI2ZWVjZDdhMTFlYWY3ZmVjOTc2NSIsImVtYWlsIjoiYWRtaW5AdXNlci5jb20iLCJmbmFtZSI6InN1cGVyIiwibG5hbWUiOiJhZG1pbiIsImNvbnRhY3QiOiIwMDAwMDAwMDAwIiwiaWF0IjoxNzUwMjQwMTcxLCJleHAiOjE3NTAzMjY1NzF9.01uYG8HSdnuso03C-RkVQ1-16NE1EKfax_8sRc0saW0",
+			"type": "string"
+		}
+	]
 }

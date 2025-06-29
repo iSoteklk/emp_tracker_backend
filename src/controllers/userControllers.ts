@@ -6,7 +6,11 @@ import {
   userProfiles,
 } from "../services/userServices";
 
-import { verifyToken } from "../utils/authUtils";
+import {
+  verifyToken,
+  checkIsAdmin,
+  getTokenFromRequest,
+} from "../utils/authUtils";
 
 const getAllUsersController = async (
   req: Request,
@@ -40,8 +44,7 @@ const createUsersController = async (
 ) => {
   const userData = req.body;
   let user;
-  //append field points = 0 to the user data
-  userData.points = 0;
+
   try {
     user = await createUser(userData);
     if (user && user.success === "false") {
@@ -72,7 +75,7 @@ const loginUserController = async (
     }
     res
       .status(200)
-      .json({ success: "true", token: user?.token, contact: user?.contact });
+      .json({ success: "true", token: user?.token, contact: user?.contact,email:user?.email, role: user?.role, name: user?.name });
   } catch (err) {
     console.error(err);
     return res.status(500).json({
@@ -87,24 +90,12 @@ const getProfileController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({
-      success: "false",
-      message: "No token provided",
-    });
+  const tokenResult = getTokenFromRequest(req, res);
+  if (!tokenResult.success) {
+    return tokenResult.response;
   }
 
-  const { valid, decoded, error } = verifyToken(token);
-  if (!valid) {
-    return res.status(401).json({
-      success: "false",
-      message: "Invalid token",
-      error,
-    });
-  }
-
-  const email = (decoded as any).email;
+  const email = (tokenResult.decoded as any).email;
   try {
     const userProfile = await userProfiles(email);
     if (userProfile.success === "false") {
@@ -132,23 +123,6 @@ const getUserByEmailController = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const token = req.headers.authorization?.split(" ")[1];
-  // if (!token) {
-  //   return res.status(401).json({
-  //     success: "false",
-  //     message: "No token provided",
-  //   });
-  // }
-
-  // const { valid, decoded, error } = verifyToken(token);
-  // if (!valid) {
-  //   return res.status(401).json({
-  //     success: "false",
-  //     message: "Invalid token",
-  //     error,
-  //   });
-  // }
-
   const email = req.query.email as string;
   try {
     const userProfile = await userProfiles(email);

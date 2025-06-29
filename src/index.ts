@@ -1,14 +1,14 @@
 import express from "express";
-import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes";
-
-dotenv.config();
+import locationRoutes from "./routes/locationRoutes";
+import timeEntryRoutes from "./routes/timeEntryRoutes";
+import workTimeRoutes from "./routes/workTimeRoutes";
+import config from "./config/config";
+import { displayBanner, displayStartupInfo } from "./utils/startupUtils";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.MONGODB_URI as string;
 
 app.use(
   cors({
@@ -20,6 +20,7 @@ app.use(
       "Content-Type",
       "Origin",
       "authorization",
+      "Authorization",
     ],
   })
 );
@@ -35,12 +36,17 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", locationRoutes);
+app.use("/api/v1", timeEntryRoutes);
+app.use("/api/v1", workTimeRoutes);
 
 mongoose
-  .connect(MONGODB_URI)
-  .then(() => console.log(`🗄️| Connected to MongoDB Databse successfully`))
-  .then(async () => {
-    app.listen(PORT);
+  .connect(config.database.mongoUri)
+  .then(() => {
+    app.listen(config.server.port);
+
+    // Display ASCII art banner and startup info
+    displayBanner(config.server.port);
+    displayStartupInfo(config.server.port);
   })
-  .then(() => console.log(`🌎 | App Started on  http://localhost:${PORT}`))
   .catch((err) => console.log("🚫 " + err));
