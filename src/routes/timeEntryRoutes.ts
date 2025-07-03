@@ -9,6 +9,7 @@ import {
   getTimeEntryByIdController,
   getTimeEntriesByUserAndDateAdminController,
   getUserTimeEntriesAdminController,
+  getAttendanceByDateController,
 } from "../controllers/timeEntryController";
 import { adminMiddleware, authMiddleware } from "../middleware/authMiddleware";
 
@@ -95,6 +96,18 @@ router.get(
   "/shift/date/:date",
   adminMiddleware,
   getTimeEntriesByDateController
+);
+
+/**
+ * GET api/v1/shift/attendance/:date
+ * Get attendance for a specific date (admin only)
+ * @param {string} date - Date in YYYY-MM-DD format
+ * @returns {Array} List of all time entries on the specified date
+ */
+router.get(
+  "/shift/attendance/:date",
+  adminMiddleware,
+  getAttendanceByDateController
 );
 
 /**
