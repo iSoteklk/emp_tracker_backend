@@ -21,7 +21,9 @@ const clockInController = async (
       ...req.body,
       email,
       status: "clocked-in",
-      date:req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date
+      date: req.body.date.includes("T")
+        ? req.body.date.split("T")[0]
+        : req.body.date,
     };
 
     const result = await timeEntryServices.logTimeEntryStart(timeEntryData);
@@ -63,9 +65,11 @@ const clockOutController = async (
       clockOutLocation,
       totalHours,
       notes,
-      date: req.body.date 
-      ? (req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date) 
-      : new Date().toISOString().split("T")[0],
+      date: req.body.date
+        ? req.body.date.includes("T")
+          ? req.body.date.split("T")[0]
+          : req.body.date
+        : new Date().toISOString().split("T")[0],
     };
 
     const result = await timeEntryServices.logTimeEntryEnd(
@@ -136,7 +140,10 @@ const getUserTimeEntriesController = async (
 
     const email = (tokenResult.decoded as any).email;
     const range = req.params.range || "all"; // Default to 'all' if not provided
-    const timeEntries = await timeEntryServices.getTimeEntriesByUserId(email,range);
+    const timeEntries = await timeEntryServices.getTimeEntriesByUserId(
+      email,
+      range
+    );
 
     return res.status(200).json({
       success: "true",
@@ -196,7 +203,7 @@ const getTimeEntriesByDateController = async (
 ) => {
   try {
     let { date } = req.params;
-    date  =  date.includes("T") ? date.split("T")[0] : date
+    date = date.includes("T") ? date.split("T")[0] : date;
     const timeEntries = await timeEntryServices.getTimeEntriesByDate(date);
 
     return res.status(200).json({
@@ -228,8 +235,9 @@ const getTimeEntriesByUserAndDateController = async (
     }
 
     const email = (tokenResult.decoded as any).email;
-    const date  =  req.params.date.includes("T") ? req.params.date.split("T")[0] : req.params.date
-    
+    const date = req.params.date.includes("T")
+      ? req.params.date.split("T")[0]
+      : req.params.date;
 
     const timeEntries = await timeEntryServices.getTimeEntriesByUserIdAndDate(
       email,
@@ -262,7 +270,9 @@ const getTimeEntriesByUserAndDateAdminController = async (
     }
 
     const email = req.body.email || req.body.userId;
-    const date  =  req.body.date.includes("T") ? req.body.date.split("T")[0] : req.body.date
+    const date = req.body.date.includes("T")
+      ? req.body.date.split("T")[0]
+      : req.body.date;
 
     // Validate email and date
     if (!email || !date) {
@@ -323,6 +333,34 @@ const getTimeEntryByIdController = async (
   }
 };
 
+/**
+ * Controller to get attendance for a specific date using getAttendanceByDate (admin only)
+ */
+
+const getAttendanceByDateController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let { date } = req.params;
+    date = date.includes("T") ? date.split("T")[0] : date;
+    const timeEntries = await timeEntryServices.getAttendanceByDate(date);
+
+    return res.status(200).json({
+      success: "true",
+      data: timeEntries,
+    });
+  } catch (error) {
+    console.error("Error in getTimeEntriesByDateController:", error);
+    return res.status(500).json({
+      success: "false",
+      message: "Failed to retrieve time entries for the specified date",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
 export {
   clockInController,
   clockOutController,
@@ -333,4 +371,5 @@ export {
   getTimeEntryByIdController,
   getTimeEntriesByUserAndDateAdminController,
   getUserTimeEntriesAdminController,
+  getAttendanceByDateController,
 };
