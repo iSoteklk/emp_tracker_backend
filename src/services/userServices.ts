@@ -18,6 +18,17 @@ const getAllUsers = async () => {
   }
 };
 
+// Get all users without admin
+const getAllUsersWithoutAdmin = async () => {
+  try {
+    const users = await userRepository.getAllUsersWithoutAdmin();
+    return { data: users };
+  } catch (err) {
+    console.error(err);
+    return { message: "Failed to get users" };
+  }
+};
+
 const createUser = async (userData: IUser) => {
   try {
     // Hash the password
@@ -113,4 +124,10 @@ const userProfiles = async (email: string) => {
   }
 };
 
-export { createUser, getAllUsers, loginUser, userProfiles };
+export {
+  createUser,
+  getAllUsers,
+  loginUser,
+  userProfiles,
+  getAllUsersWithoutAdmin,
+};
