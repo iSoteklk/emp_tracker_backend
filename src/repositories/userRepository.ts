@@ -50,4 +50,20 @@ const updatePointsByEmail = async (email: string, points: number) => {
   }
 };
 
-export { getAllUsers, findUserByEmail, addUser, updatePointsByEmail };
+const getAllUsersWithoutAdmin = async () => {
+  try {
+    const users = await User.find({ role: { $ne: "admin" } }).sort({ role: 1 });
+    return users;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to fetch users from the database");
+  }
+};
+
+export {
+  getAllUsers,
+  findUserByEmail,
+  addUser,
+  updatePointsByEmail,
+  getAllUsersWithoutAdmin,
+};
