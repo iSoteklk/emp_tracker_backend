@@ -12,7 +12,7 @@ import { adminMiddleware, authMiddleware } from "../middleware/authMiddleware";
 const router = Router();
 
 // Apply authentication middleware to all work time routes
-router.use(adminMiddleware);
+// router.use(adminMiddleware);
 
 /**
  * @swagger
