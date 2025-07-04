@@ -816,6 +816,80 @@
 						"description": "Retrieve the currently active work time configuration"
 					},
 					"response": []
+				},
+				{
+					"name": "Get All Work Time Configs (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/public/work-time/config",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"public",
+								"work-time",
+								"config"
+							]
+						},
+						"description": "Get all work time configurations (public endpoint, no authentication required)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Work Time Config By Name (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/public/work-time/config/Standard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"public",
+								"work-time",
+								"config",
+								"Standard"
+							]
+						},
+						"description": "Get a specific work time configuration by name (public endpoint, no authentication required)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Active Work Time Config (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/public/work-time/config/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"public",
+								"work-time",
+								"config",
+								"active"
+							]
+						},
+						"description": "Retrieve the currently active work time configuration (public endpoint, no authentication required)"
+					},
+					"response": []
 				}
 			],
 			"description": "Work time configuration management endpoints"
