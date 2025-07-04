@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes";
 import locationRoutes from "./routes/locationRoutes";
 import timeEntryRoutes from "./routes/timeEntryRoutes";
 import workTimeRoutes from "./routes/workTimeRoutes";
+import workTimePublicRoutes from "./routes/workTimePublic";
 import config from "./config/config";
 import { displayBanner, displayStartupInfo } from "./utils/startupUtils";
 
@@ -34,11 +35,12 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
-
+app.use("/api/v1", workTimePublicRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", locationRoutes);
 app.use("/api/v1", timeEntryRoutes);
 app.use("/api/v1", workTimeRoutes);
+
 
 mongoose
   .connect(config.database.mongoUri)
