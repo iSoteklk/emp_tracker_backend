@@ -9,57 +9,9 @@ import {
 } from "../controllers/workTimeController";
 import { adminMiddleware, authMiddleware } from "../middleware/authMiddleware";
 
+
 const router = Router();
-
-// Apply authentication middleware to all work time routes
-// router.use(adminMiddleware);
-
-/**
- * @swagger
- * /work-time/config:
- *   get:
- *     summary: Get all work time configurations
- *     description: Retrieve all work time configuration settings
- *     tags: [WorkTime]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Work time configurations retrieved successfully
- *       401:
- *         description: Unauthorized - Authentication required
- *       500:
- *         description: Server error
- */
-router.get("/work-time/config", getAllWorkTimeConfigsController);
-
-/**
- * @swagger
- * /work-time/config/{name}:
- *   get:
- *     summary: Get work time configuration by name
- *     description: Retrieve a specific work time configuration by its name
- *     tags: [WorkTime]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: name
- *         schema:
- *           type: string
- *         required: true
- *         description: The name of the work time configuration
- *     responses:
- *       200:
- *         description: Work time configuration retrieved successfully
- *       401:
- *         description: Unauthorized - Authentication required
- *       404:
- *         description: Work time configuration not found
- *       500:
- *         description: Server error
- */
-router.get("/work-time/config/:name", getWorkTimeConfigByNameController);
+router.use(adminMiddleware);
 
 /**
  * @swagger
@@ -125,7 +77,7 @@ router.get("/work-time/config/:name", getWorkTimeConfigByNameController);
  *       500:
  *         description: Server error
  */
-router.post("/work-time/config", adminMiddleware, addWorkTimeConfigController);
+router.post("/work-time/config", addWorkTimeConfigController);
 
 /**
  * @swagger
@@ -198,7 +150,8 @@ router.post("/work-time/config", adminMiddleware, addWorkTimeConfigController);
  *       500:
  *         description: Server error
  */
-router.put("/work-time/config/:name", adminMiddleware, updateWorkTimeConfigController);
+router.put("/work-time/config/:name", updateWorkTimeConfigController);
+
 
 /**
  * @swagger
@@ -226,26 +179,11 @@ router.put("/work-time/config/:name", adminMiddleware, updateWorkTimeConfigContr
  *       500:
  *         description: Server error
  */
-router.put("/work-time/config/active/:name", adminMiddleware, setActiveWorkTimeConfigController);
 
-/**
- * @swagger
- * /work-time/config/active:
- *   get:
- *     summary: Get active work time configuration
- *     description: Retrieve the currently active work time configuration
- *     tags: [WorkTime]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Active work time configuration retrieved successfully
- *       404:
- *         description: No active work time configuration found
- *       500:
- *         description: Server error
- */
-router.get("/work-time/config/active", getActiveWorkTimeConfigController);
+
+router.put("/work-time/config/active/:name", setActiveWorkTimeConfigController);
+
+
 
 
 
