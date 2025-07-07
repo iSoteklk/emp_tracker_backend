@@ -8,6 +8,7 @@ import workTimeRoutes from "./routes/workTimeRoutes";
 import workTimePublicRoutes from "./routes/workTimePublic";
 import config from "./config/config";
 import { displayBanner, displayStartupInfo } from "./utils/startupUtils";
+import { scheduleCronJobs } from "./utils/cronUtils";
 
 const app = express();
 
@@ -41,7 +42,6 @@ app.use("/api/v1", locationRoutes);
 app.use("/api/v1", timeEntryRoutes);
 app.use("/api/v1", workTimeRoutes);
 
-
 mongoose
   .connect(config.database.mongoUri)
   .then(() => {
@@ -50,5 +50,8 @@ mongoose
     // Display ASCII art banner and startup info
     displayBanner(config.server.port);
     displayStartupInfo(config.server.port);
+
+    // Schedule cron jobs
+    scheduleCronJobs();
   })
   .catch((err) => console.log("🚫 " + err));

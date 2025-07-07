@@ -2,6 +2,7 @@ import * as timeEntryRepository from "../repositories/timeEntryRepository";
 import { ITimeEntry } from "../models/timeEntryModel";
 import { getAllUsersWithoutAdmin } from "./userServices";
 import { IUser } from "../models/userModel";
+import { calculateTimeDifference } from "../utils/timeUtils";
 
 interface IAttendance {
   email: string;
@@ -159,6 +160,71 @@ const getAllTimeEntries = async (): Promise<ITimeEntry[]> => {
   }
 };
 
+// Function to update time entries with clocked-in status for current date
+const updateCurrentDateClockedInEntries = async (
+  updateData: Partial<ITimeEntry>
+): Promise<ITimeEntry[]> => {
+  try {
+    // Get current date in YYYY-MM-DD format
+    const today = new Date();
+    const currentDate = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
+
+    // Get all time entries for the current date
+    const timeEntries = await timeEntryRepository.getTimeEntriesByDate(
+      currentDate
+    );
+
+    // Filter entries with "clocked-in" status
+    const clockedInEntries = timeEntries.filter(
+      (entry) => entry.status === "clocked-in"
+    );
+
+    // Update each clocked-in entry
+    const updatedEntries: ITimeEntry[] = [];
+
+    for (const entry of clockedInEntries) {
+      // Update the entry with the provided data
+      const entryId = entry._id?.toString() || entry.id?.toString();
+      if (!entryId) {
+        console.error("Could not find valid ID for time entry");
+        continue;
+      }
+
+      // If entry has clockInTime, calculate total hours
+      const updatedEntryData = { ...updateData };
+      if (entry.clockInTime && updatedEntryData.clockOutTime) {
+        const totalHours = calculateTimeDifference(
+          new Date(entry.clockInTime),
+          new Date(updatedEntryData.clockOutTime)
+        );
+        updatedEntryData.totalHours = totalHours;
+      }
+
+      // set normal hours if not provided
+      if (!updatedEntryData.totalHours) {
+        updatedEntryData.totalHours = entry.totalHours || 9; // Default to 0 if not set
+      }
+
+      const updatedEntry = await timeEntryRepository.logTimeEntryEnd(
+        entryId,
+        updatedEntryData
+      );
+
+      if (updatedEntry) {
+        updatedEntries.push(updatedEntry);
+      }
+    }
+
+    return updatedEntries;
+  } catch (error) {
+    console.error("Error updating clocked-in entries:", error);
+    throw new Error(
+      "Failed to update clocked-in entries: " +
+        (error instanceof Error ? error.message : "Unknown error")
+    );
+  }
+};
+
 export {
   logTimeEntryStart,
   logTimeEntryEnd,
@@ -168,4 +234,5 @@ export {
   getTimeEntryById,
   getAllTimeEntries,
   getAttendanceByDate,
+  updateCurrentDateClockedInEntries,
 };
