@@ -550,7 +550,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Headquarters\",\n    \"address\": \"xig\",\n    \"contact\": \"1234567890\"\n}",
+							"raw": "{\n    \"latitude\": 6.927079,\n    \"longitude\": 79.861243,\n    \"address\": \"Main Office Building\",\n    \"radius\": 100,\n    \"name\": \"Headquarters\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -588,7 +588,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"latitude\": 6.876231,\n  \"longitude\": 79.900228\n}",
+							"raw": "{\n  \"latitude\": 6.876231,\n  \"longitude\": 79.900228,\n  \"radius\": 75,\n  \"name\": \"Updated Headquarters\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -596,7 +596,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4000/api/v1/locations/update/xig",
+							"raw": "http://localhost:4000/api/v1/locations/update/Main Office Building",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -607,7 +607,7 @@
 								"v1",
 								"locations",
 								"update",
-								"xig"
+								"Main Office Building"
 							]
 						},
 						"description": "Update a location by address (Admin access only)"
