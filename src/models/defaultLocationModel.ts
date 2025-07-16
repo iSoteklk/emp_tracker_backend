@@ -3,18 +3,18 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface ILocation {
   latitude: number;
   longitude: number;
-  address?: string; // Optional human-readable address
-  radius?: number; // GPS accuracy in meters
-  name?: string; // Optional name for the location
+  address: string; // Optional human-readable address
+  radius: number; // GPS accuracy in meters
+  name: string; // Optional name for the location
 }
 
 // Location interface for geolocation data
 export interface ILocation {
   latitude: number;
   longitude: number;
-  address?: string; // Optional human-readable address
-  radius?: number; // GPS accuracy in meters
-  name?: string; // Optional name for the location
+  address: string; // Optional human-readable address
+  radius: number; // GPS accuracy in meters
+  name: string; // Optional name for the location
 }
 const locationSchema = new Schema(
   {
