@@ -81,7 +81,7 @@ const loginUser = async (email: string, password: string) => {
         lname: user.lname,
         contact: user.contact,
         role: user.role,
-        workLocation: user.workLocation || "default",
+        location: user.location || "default",
       },
       config.auth.jwtSecret,
       {
@@ -96,6 +96,7 @@ const loginUser = async (email: string, password: string) => {
       token,
       contact: user.contact,
       role: user.role,
+      location: user.location || "default",
       name: `${user.fname} ${user.lname}`,
       email: user.email,
       message: "Login successful",
