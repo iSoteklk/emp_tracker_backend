@@ -6,6 +6,7 @@ export interface IUser extends Document {
   lname: string;
   contact: string;
   role: string | "employee" | "admin";
+  workLocation?: string; // Optional field for work location
   password: string;
 }
 
@@ -16,6 +17,7 @@ const userschema: Schema = new Schema(
     lname: { type: String, required: true },
     contact: { type: String, required: true },
     role: { type: String, required: true },
+    workLocation: { type: String, required: false },
     password: { type: String, required: true },
   },
   { timestamps: true }
