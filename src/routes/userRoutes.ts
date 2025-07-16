@@ -21,6 +21,7 @@ router.get(
  * @body {string} lname - User's last name
  * @body {string} contact - User's contact number
  * @body {string} role - User's role (e.g., admin, employee)
+ * @body {string} workLocation - User's work location (optional)
  * @body {string} password - User's password
  */
 router.post(
