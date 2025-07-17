@@ -10,7 +10,6 @@ import { authMiddleware, adminMiddleware } from "../middleware/authMiddleware";
  */
 router.get(
   "/locations/getall",
-  adminMiddleware,
   locationControllers.getAllLocationsController
 );
 
